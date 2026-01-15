@@ -32,7 +32,7 @@ Implement safeguards to prevent cross-customer data exposure when combining cust
 
 ## A006: Prevent PII leakage
 
-Establish safeguards to prevent personal data leakage through AI outputs
+Establish safeguards to prevent personal data leakage through AI outputs and logs
 
 ---
 
@@ -72,9 +72,9 @@ Implement real-time input filtering using automated moderation tools
 
 ---
 
-## B006: Limit AI agent system access
+## B006: Prevent unauthorized AI agent actions
 
-Implement safeguards to limit AI agent system access based on context and declared objectives
+Implement safeguards to prevent AI agents from performing actions beyond intended scope and authorized privileges
 
 ---
 
@@ -104,7 +104,7 @@ Establish a risk taxonomy that categorizes risks within harmful, out-of-scope, a
 
 ## C002: Conduct pre-deployment testing
 
-Conduct internal testing of AI systems prior to deployment across risk categories (including high-risk, harmful, hallucinated, and out-of-scope outputs and tool calls) for system changes requiring formal review or approval
+Conduct internal testing of AI systems prior to deployment across risk categories for system changes requiring formal review or approval
 
 ---
 
@@ -132,9 +132,9 @@ Implement safeguards to prevent security vulnerabilities in outputs from impacti
 
 ---
 
-## C007: Flag high risk recommendations
+## C007: Flag high risk outputs
 
-Implement an alerting system that flags high-risk recommendations for human review
+Implement an alerting system that flags high-risk outputs for human review
 
 ---
 
@@ -228,9 +228,9 @@ Establish AI vendor due diligence processes for foundation and upstream model pr
 
 ---
 
-## E007: Document system change approvals
+## E007: [Retired] Document system change approvals
 
-Define approval processes for material changes to AI systems (e.g. model versions, access controls, data sources) requiring formal review and sign-off
+Merged with E004 - see changelog (Q1 2026 update)
 
 ---
 
@@ -272,7 +272,7 @@ Establish a quality management system for AI systems proportionate to the size o
 
 ## E014: Share transparency reports
 
-Establish policies for sharing transparency reports with relevant stakeholders including regulators and customers
+Merged with E017 - see changelog (Q1 2026 update)
 
 ---
 
@@ -284,7 +284,7 @@ Maintain logs of AI system processes, actions, and model outputs where permitted
 
 ## E016: Implement AI disclosure mechanisms
 
-Implement clear disclosure mechanisms to inform users when they are interacting with AI systems rather than human operators
+Implement clear disclosure mechanisms to inform users when they are interacting with AI systems rather than humans
 
 ---
 
