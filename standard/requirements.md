@@ -8,13 +8,13 @@ Establish and communicate AI input data policies covering how customer data is u
 
 ## A002: Establish output data policy
 
-Establish AI output ownership, usage, opt-out and deletion policies to customers and communicate these policies
+Establish AI output ownership, usage, opt-in/out and deletion policies to customers and communicate these policies
 
 ---
 
-## A003: Limit AI agent data collection
+## A003: Limit AI agent data access
 
-Implement safeguards to limit AI agent data access to task-relevant information based on user roles and context
+Implement safeguards to limit AI agent data access based on task, user role, agent role and context
 
 ---
 
@@ -32,7 +32,7 @@ Implement safeguards to prevent cross-customer data exposure when combining cust
 
 ## A006: Prevent PII leakage
 
-Establish safeguards to prevent personal data leakage through AI outputs and logs
+Establish safeguards to prevent personal data leakage through AI outputs
 
 ---
 
@@ -50,7 +50,7 @@ Implement adversarial testing program to validate system resilience against adve
 
 ## B002: Detect adversarial input
 
-Implement monitoring capabilities to detect and respond to adversarial inputs and prompt injection attempts
+Implement monitoring capabilities to detect and enable responding to adversarial inputs and prompt injection attempts
 
 ---
 
@@ -84,9 +84,9 @@ Establish and maintain user access controls and admin privileges for AI systems 
 
 ---
 
-## B008: Protect model deployment environment
+## B008: Protect AI system deployment environment
 
-Implement security measures for AI model deployment environments including encryption, access controls and authorization
+Implement security measures for AI system deployment environments including encryption, access controls and authorization
 
 ---
 
@@ -98,7 +98,7 @@ Implement output limitations and obfuscation techniques to safeguard against inf
 
 ## C001: Define AI risk taxonomy
 
-Establish a risk taxonomy that categorizes risks within harmful, out-of-scope, and hallucinated outputs, tool calls, and other risks based on application-specific usage
+Establish a risk taxonomy based on system capabilites and deployment context
 
 ---
 
@@ -132,7 +132,7 @@ Implement safeguards to prevent security vulnerabilities in outputs from impacti
 
 ---
 
-## C007: Flag high risk outputs
+## C007: Flag high risk outputs for human review
 
 Implement an alerting system that flags high-risk outputs for human review
 
@@ -146,7 +146,7 @@ Implement monitoring of AI systems across risk categories
 
 ## C009: Enable real-time feedback and intervention
 
-Implement mechanisms to enable real-time user feedback collection and intervention mechanisms
+Implement mechanisms to enable real-time user feedback collection, intervention and actioning mechanisms
 
 ---
 
@@ -216,9 +216,9 @@ Document which AI system changes across the development & deployment lifecycle r
 
 ---
 
-## E005: Assess cloud vs on-prem processing
+## E005: Document data storage security
 
-Establish criteria for selecting cloud provider, and circumstances for on-premises processing considering data sensitivity, regulatory requirements, security controls, and operational needs
+Document data storage security practices considering data sensitivity, regulatory requirements, security controls, and operational needs
 
 ---
 
@@ -276,9 +276,9 @@ Merged with E017 - see changelog (Q1 2026 update)
 
 ---
 
-## E015: Log model activity
+## E015: Log AI system activity
 
-Maintain logs of AI system processes, actions, and model outputs where permitted to support incident investigation, auditing, and explanation of AI system behavior
+Maintain logs of AI system processes, actions, and agent outputs where permitted to support incident investigation, auditing, and explanation of AI system behavior
 
 ---
 
@@ -303,6 +303,3 @@ Implement or document guardrails to prevent AI-enabled misuse for cyber attacks 
 ## F002: Prevent catastrophic misuse
 
 Implement or document guardrails to prevent AI-enabled catastrophic system misuse (chemical / bio / radio / nuclear)
-
----
-

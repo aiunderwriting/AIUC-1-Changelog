@@ -8,23 +8,30 @@
 
 ### Control mays
 - Documenting processes for handling end-user data subject rights. For example, handling requests for opt-in/opt-out rights, access, portability, or deletion of input data.
+
 ---
 
 ## A002: Establish output data policy
 
 ### Control shoulds
 - Establishing output ownership and usage rights policies. For example, specifying customer ownership of AI-generated outputs versus AI inputs, defining permitted uses of outputs (commercial use, redistribution, modification), documenting usage restrictions or limitations, and clarifying how ownership applies to different output types or use cases.
-- Disclosing opt-out and deletion procedures for AI outputs. For example, documenting how customers can opt out of output storage or reuse, explaining deletion request processes, specifying retention periods and data handling practices, and clarifying how customers can control or revoke permissions for their outputs.
+- Disclosing opt-in/opt-out and deletion policies for AI outputs. For example, documenting how customers can opt out of output storage or reuse, explaining deletion request processes, specifying retention periods and data handling practices, and clarifying how customers can control or revoke permissions for their outputs.
+
+### Control mays
+- Implementing technical controls to enforce AI output opt-in/opt-out and deletion policies. For example, automating customer preference enforcement through consent management configuration, processing opt-out and deletion requests within defined workflows, and validating that opted-out outputs are excluded from storage and downstream reuse.
+
 ---
 
-## A003: Limit AI agent data collection
+## A003: Limit AI agent data access
 
 ### Control shoulds
-- Configuring data collection limits to reduce data and privacy exposure. For example, limiting data collection to task-relevant information based on context, implementing scoping based on user roles or workflow requirements, and avoiding persistent or out-of-scope data access.
+- Configuring data access limits to reduce data and privacy exposure. For example, limiting data access to task-relevant information based on context, implementing scoping based on user roles or workflow requirements, and avoiding persistent or out-of-scope data access.
 
 ### Control mays
 - Deploying monitoring mechanisms. Including ensuring AI systems only perform necessary inference and logging deviations from defined operational scope.
-- Integrating with existing authorization systems to align agent access permissions with organizational policies.
+- Enabling agent identity management. For example, assigning each agent a unique, cryptographically verifiable identity; supporting standard identity federation protocols (e.g., OAuth 2.0, OIDC) for enterprise IAM integration; publishing agent cards declaring each agent's capabilities, tools, and permission scopes.
+- Enabling agent access and governance through permission-ready architecture. For example, exposing per-agent permission scopes mappable to enterprise roles; supporting just-in-time permissions scoped to specific subtasks; preventing silent inheritance of elevated permissions from orchestrators or parent agents; enforcing segregation of duties across systems; and integrating data loss prevention controls on agent actions and tool calls.
+
 ---
 
 ## A004: Protect IP & trade secrets
@@ -36,6 +43,7 @@
 - Leveraging foundation model provider protections. For example, using providers with zero data retention policies, requiring contractual commitments that inputs are not used for training, selecting models with enhanced privacy guarantees for sensitive use cases.
 - Implementing technical controls to detect proprietary information in outputs.
 - Establishing output monitoring for high-risk IP scenarios. For example, logging AI responses that accessed confidential data sources, implementing human review workflows for outputs flagged as potentially containing sensitive information.
+
 ---
 
 ## A005: Prevent cross-customer data exposure
@@ -46,6 +54,7 @@
 
 ### Control mays
 - Implementing specific privacy-enhancing technologies (PETs) to reduce competitive exposure.
+
 ---
 
 ## A006: Prevent PII leakage
@@ -56,6 +65,7 @@
 
 ### Control mays
 - Integrating with existing data loss prevention (DLP) systems to monitor and block outputs containing personal data in violation of policy.
+
 ---
 
 ## A007: Prevent IP violations
@@ -67,6 +77,7 @@
 - Establishing supplementary content filtering mechanisms where provider protections have gaps or limitations. For example, detecting copyrighted material in outputs, implementing trademark screening.
 - Implementing user guidance and guardrails to reduce IP risk. For example, usage policies that explain prohibited content types, user warnings in product, restricting output generation in known infringement domains.
 - Implementing restrictions in AI acceptable use policy.
+
 ---
 
 ## B001: Third-party testing of adversarial robustness
@@ -79,6 +90,7 @@
 
 ### Control mays
 - Aligning adversarial testing with broader security testing programs. For example, integrating AI-specific test cases into broader penetration testing, sharing threat models across red/blue teams, aligning test cycles with security audit and compliance calendars.
+
 ---
 
 ## B002: Detect adversarial input
@@ -91,6 +103,7 @@
 ### Control mays
 - Implementing adversarial input detection prior to AI model processing where feasible. For example, using pre-processing filters to flag likely threats before model processing.
 - Integrating adversarial input detection into existing security operations tooling. For example, forwarding flagged inputs to SIEM platforms, correlating detection with authentication and network logs, enabling SOC teams to triage AI-related security events.
+
 ---
 
 ## B003: Manage public release of technical details
@@ -101,6 +114,7 @@
 
 ### Control mays
 - Establishing approval processes. For example, requiring designated review for public content referencing AI capabilities in e.g. publications, presentations, and marketing materials, and documenting approved disclosures with business justification.
+
 ---
 
 ## B004: Prevent AI endpoint scraping
@@ -110,6 +124,7 @@
 - Implementing rate limiting and query restrictions. For example, establishing per-user quotas to prevent model extraction, blocking excessive query patterns, implementing progressive restrictions for suspicious behavior, or using economic disincentives for high-volume usage.
 - Conducting simulated external attack testing of AI endpoints. For example, performing automated attack simulations, testing endpoint protection effectiveness against high-volume and distributed attacks, and documenting methodologies appropriate to organizational threat profile.
 - Maintaining endpoint security through remediation. For example, tracking identified vulnerabilities, implementing protective measures based on testing outcomes, and regularly updating endpoint defenses and detection thresholds.
+
 ---
 
 ## B005: Implement real-time input filtering
@@ -122,13 +137,18 @@
 - Providing feedback to users when inputs are blocked.
 - Logging flagged prompts for analysis and refinement of filters, while ensuring compliance with privacy obligations.
 - Periodically evaluating filter performance and adjusting thresholds accordingly. For example, accuracy, latency, false positives/negatives.
+
 ---
 
 ## B006: Prevent unauthorized AI agent actions
 
 ### Control shoulds
-- Implementing technical restrictions that limit agent capabilities to authorized scope. For example, restricting agent access to approved backend services and APIs, enforcing network segmentation or API gateway rules, or implementing service-level authorization preventing access to sensitive systems.
+- Implementing technical restrictions that limit agent capabilities to authorized scope. For example, restricting agent access to approved backend services, APIs and MCP servers, enforcing network segmentation or API gateway rules, or implementing service-level authorization preventing access to sensitive systems.
 - Deploying monitoring and alerting for agent actions that exceed security boundaries. For example, logging all agent service interactions, alerting on access attempts to unauthorized systems or APIs, or anomaly detection flagging unusual connection patterns.
+
+### Control mays
+- Implementing additional safeguards to contain runtime risk. For example, applying sandboxed execution environments with restricted filesystem, network, and credential access for first-party MCP servers; monitoring MCP tool definitions for unauthorized changes after initial approval; providing pre-execution authorization hooks that verify runtime tool calls against defined policy before execution proceeds; or equivalent containment approaches appropriate to the deployment architecture..
+
 ---
 
 ## B007: Enforce user access privileges to AI systems
@@ -136,18 +156,22 @@
 ### Control shoulds
 - Implementing system-level access controls tailored to AI systems. For example, using role-based or attribute-based access to restrict access to model configuration, training datasets, tool-calling capabilities, or prompt logs, based on job function and system sensitivity.
 - Restricting administrative and configuration privileges to authorized personnel. For example, limiting ability to alter system behavior, tools, or models.
-- Conducting access reviews and updates at least quarterly. For example, validating access assignments, updating based on policy or role changes, documenting access changes with AI-specific context (e.g. model access justification, changes to agent capability boundaries, or access to sensitive prompt/response history).
+- Conducting access reviews and updates at least quarterly. For example, validating access assignments, updating based on policy or role changes,  documenting access changes with AI-specific context (e.g. model access justification, changes to agent capability boundaries, or access to sensitive prompt/response history).
+
 ---
 
-## B008: Protect model deployment environment
+## B008: Protect AI system deployment environment
 
 ### Control shoulds
-- Implementing model access protection. For example, restricting access to production AI models based on job function and operational need, implementing MFA for model system access, maintaining user access reviews appropriate to organizational size.
-- Establishing deployment security controls. For example, applying scoped API tokens or signed requests, using TLS for all endpoint traffic, implementing schema validation to protect model APIs from malformed or adversarial input.
+- Implementing AI system access protection. For example, restricting access to production AI systems based on job function and operational need, implementing MFA for model system access, maintaining user access reviews appropriate to organizational size.
+- Enforcing caller authentication across API endpoints and agentic interfaces. For example, applying scoped API tokens or signed requests for model API access; enforcing OAuth 2.0 or OIDC token validation with appropriate scoping for MCP server connections; implementing mutual authentication for agent-to-agent interfaces.
+- Securing data in transit across model API endpoints and agentic interfaces. For example, enforcing TLS for all model API endpoint traffic, MCP server connections, and agent-to-agent communication channels; implementing credential rotation policies for long-lived service connections.
 
 ### Control mays
+- Enforcing data integrity across agentic interfaces. For example, implementing cryptographic message signing for agent-to-agent communication; applying schema validation and input sanitization to MCP tool call inputs and outputs.
 - Securing model hosting environments. For example, using up-to-date and minimal container images, scanning for known vulnerabilities in dependencies and base images, and applying infrastructure-level isolation techniques based on risk level (e.g. container namespaces, VM separation, or dedicated GPU access).
 - Verifying model integrity before and during deployment. For example, using cryptographic checksums or signed artifacts to detect tampering, scanning model files for malicious payloads.
+
 ---
 
 ## B009: Limit output over-exposure
@@ -158,6 +182,7 @@
 ### Control mays
 - Providing user-facing notices or documentation about output limitations.
 - Limiting the fidelity of model outputs in certain use cases. For example, applying output rounding, threshold bands, or obfuscation techniques to reduce the risk of model inversion.
+
 ---
 
 ## C001: Define AI risk taxonomy
@@ -167,6 +192,7 @@
 - Aligning risk taxonomy with external frameworks and standards.
 - Establishing severity grading appropriate to organizational context and risk tolerance. For example, implementing consistent scoring methodology across risk categories, defining thresholds for flagging and human review.
 - Maintaining taxonomy currency with documented change management. For example, updating based on emerging threats or incidents.
+
 ---
 
 ## C002: Conduct pre-deployment testing
@@ -179,6 +205,7 @@
 ### Control mays
 - Integrating AI system testing into established software development lifecycle (SDLC) gates. For example, including threat modelling and risk evaluation during design phases, requiring risk evaluation and sign-off at staging or pre-production milestones, aligning with CI/CD or MLOps pipelines, and documenting test artefacts in shared repositories."
 - Implementing pre-deployment vulnerability scanning of AI artifacts and dependencies. For example, scanning AI models and ML libraries for security vulnerabilities, validating runtime behavior for unsafe operations, and analyzing outputs for harmful content before deployment.
+
 ---
 
 ## C003: Prevent harmful outputs
@@ -190,6 +217,7 @@
 ### Control mays
 - Implementing bias detection and mitigation controls. For example, monitoring for discriminatory patterns, implementing fairness checks in outputs.
 - Evaluating harm mitigation controls using performance metrics.
+
 ---
 
 ## C004: Prevent out-of-scope outputs
@@ -200,6 +228,7 @@
 
 ### Control mays
 - Providing user guidance on system capabilities and limitations. For example, communicating what the AI system can and cannot do, intended use cases, and topics or requests outside the system's scope.
+
 ---
 
 ## C005: Prevent customer-defined high risk outputs
@@ -211,6 +240,7 @@
 ### Control mays
 - Establishing escalation procedures for flagged high-risk content. For example, defining when human review is required and establishing approval workflows for edge cases.
 - Implementing automated real-time interventions. For example, blocking or modifying outputs based on severity.
+
 ---
 
 ## C006: Prevent output vulnerabilities
@@ -221,16 +251,18 @@
 
 ### Control mays
 - Detecting advanced output-based attack patterns. For example, identifying prompt injection attempts, model subversion techniques, payloads targeting downstream systems, or obfuscated exploits designed to bypass filters.
+
 ---
 
-## C007: Flag high risk outputs
+## C007: Flag high risk outputs for human review
 
 ### Control shoulds
 - Defining high-risk output criteria drawing on risk taxonomy.
 - Implementing automated detection mechanisms for high-risk outputs. For example, using content filtering, risk scoring, or classification models to identify outputs requiring review or flagging.
 
 ### Control mays
-- Establishing human review workflows for flagged high-risk outputs. For example, assigning reviewers, defining escalation procedures for complex cases, managing review queues with response time tracking, and documenting review decisions.
+- Establishing human review workflows for flagged high-risk outputs. For example, assigning reviewers, defining escalation procedures for complex cases, managing review queues with response time tracking, documenting review decisions, and reviewing workflow effectiveness regularly.
+
 ---
 
 ## C008: Monitor AI risk categories
@@ -241,6 +273,7 @@
 ### Control mays
 - Maintaining documentation. For example, recording identified scenarios with clear examples, updating risk taxonomy based on monitoring findings and incidents.
 - Integrating AI output monitoring with existing security tools. For example, forwarding alerts and flagged outputs to SIEM platforms, applying standard logging formats (e.g. JSON, syslog) to support automated threat detection workflows.
+
 ---
 
 ## C009: Enable real-time feedback and intervention
@@ -250,8 +283,8 @@
 - Ensuring accessibility of feedback and intervention mechanisms. For example, adhering to WCAG 2.1 standards for color contrast, screen reader compatibility, keyboard navigation, and clear messaging for users with disabilities.
 
 ### Control mays
-- Reviewing user feedback and intervention logs regularly. For example, evaluating patterns in interventions, adapting communication methods based on user needs and emerging risk considerations.
-- Analyzing collected feedback using structured methodologies. For example, categorizing by risk domain, prioritizing based on frequency and severity, routing high-impact or repeat issues into product backlog or compliance workflows.
+- Reviewing user feedback and intervention logs at regular intervals, analyzing findings using structured methodologies (e.g., categorizing by risk domain, frequency, and severity), and integrating corrective actions into product backlogs or compliance workflows, with records maintained for traceability.
+
 ---
 
 ## C010: Third-party testing for harmful outputs
@@ -260,6 +293,7 @@
 - Appointing qualified third-party assessors. Including selecting assessors with relevant technical capabilities for identified risk areas, maintaining records of assessor qualifications and independence.
 - Conducting regular testing. Including performing assessments of harmful outputs at least every quarter, defining testing scope and methodologies based on risk classifications and industry benchmarks like ToxiGen, coordinating with internal security and testing teams.
 - Maintaining documentation. Including testing scope, results, and remediation actions taken, tracking follow-up activities and resolution timelines.
+
 ---
 
 ## C011: Third-party testing for out-of-scope outputs
@@ -268,6 +302,7 @@
 - Appointing qualified third-party assessors. Including selecting assessors with relevant technical capabilities for identified risk areas, maintaining records of assessor qualifications and independence.
 - Conducting regular testing. Including defining testing scope and methodologies based on risk taxonomy and performing assessments of out-of-scope outputs at least every quarter. 
 - Maintaining documentation. Including testing scope, results, and remediation actions taken, tracking follow-up activities and resolution timelines.
+
 ---
 
 ## C012: Third-party testing for customer-defined risk
@@ -276,6 +311,7 @@
 - Appointing qualified third-party assessors. Including selecting assessors with relevant technical capabilities for identified risk areas, maintaining records of assessor qualifications and independence.
 - Conducting regular testing. Including defining testing scope and methodologies based on risk taxonomy and performing assessments of high-risk areas at least every quarter.
 - Maintaining documentation. Including testing scope, results, and remediation actions taken, tracking follow-up activities and resolution timelines.
+
 ---
 
 ## D001: Prevent hallucinated outputs
@@ -286,6 +322,7 @@
 
 ### Control mays
 - Maintaining uncertainty communication. For example, displaying confidence levels, providing appropriate disclaimers for generated information.
+
 ---
 
 ## D002: Third-party testing for hallucinations
@@ -294,18 +331,20 @@
 - Appointing qualified third-party assessors. Including selecting assessors with relevant technical capabilities for identified risk areas, maintaining records of assessor qualifications and independence.
 - Conducting regular testing. Including defining testing scope and methodologies based on risk taxonomy and performing assessments at least every quarter.
 - Maintaining documentation. Including testing scope, results, and remediation actions taken, tracking follow-up activities and resolution timelines.
+
 ---
 
 ## D003: Restrict unsafe tool calls
 
 ### Control shoulds
-- Implementing function call validation and authorization. For example, restricting tool access to approved functions, validating parameters before execution.
+- Implementing tool call validation and authorization. For example, restricting tool calls to approved functions and MCP servers, validating parameters before execution.
 - Enforcing rate limits and transaction caps for autonomous tool use.
 - Establishing execution monitoring and logging. For example, tracking all tool calls, monitoring for unauthorized access attempts or scope violations.
 
 ### Control mays
-- Requiring human approval for sensitive tool operations. For example, requiring human confirmation before executing high-risk actions, implementing approval workflows for operations beyond autonomous boundaries.
+- Requiring human approval for sensitive tool operations. For example, requiring human confirmation before executing high-risk actions, multi-step tool calls, implementing approval workflows for operations beyond autonomous boundaries.
 - Reviewing patterns of AI tool usage. For example, identifying anomalies, updating tool permissions, and retiring unused or high-risk functions during scheduled evaluations.
+
 ---
 
 ## D004: Third-party testing of tool calls
@@ -314,6 +353,7 @@
 - Appointing qualified third-party assessors. Including selecting assessors with relevant technical capabilities for identified risk areas, maintaining records of assessor qualifications and independence.
 - Conducting regular testing. Including defining testing scope and methodologies based on risk taxonomy and performing assessments of tool calls at least every quarter.
 - Maintaining documentation. Including testing scope, results, and remediation actions taken, tracking follow-up activities and resolution timelines.
+
 ---
 
 ## E001: AI failure plan for security breaches
@@ -323,6 +363,7 @@
 - Defining breach notification procedures. For example, customer communications, regulatory reporting requirements, and vendor notifications based on applicable privacy laws.
 - Implementing security remediation measures. For example, system freeze capabilities, vulnerability fixes, access control updates, and coordination with external security consultants when internal expertise is insufficient.
 - Establishing evidence collection requirements with guidance on preserving evidence for potential legal review. For example, system logs, user activity records, and basic documentation.
+
 ---
 
 ## E002: AI failure plan for harmful outputs
@@ -333,7 +374,8 @@
 
 ### Control mays
 - Defining harmful output categories with reference to risk taxonomy. For example, discriminatory content, offensive material, inappropriate recommendations, ideally with concrete examples.
-- Coordinating external support engagement. For example, legal counsel consultation, PR support, and insurance claim procedures.
+- Coordinating external support engagement. For example,  legal counsel consultation, PR support, and insurance claim procedures.
+
 ---
 
 ## E003: AI failure plan for hallucinations
@@ -345,6 +387,7 @@
 ### Control mays
 - Defining hallucination incident types. 
 - Coordinating potential external support. For example, legal consultation for significant claims, financial review when needed, and insurance coverage activation.
+
 ---
 
 ## E004: Assign accountability
@@ -355,14 +398,16 @@
 
 ### Control mays
 - Implementing code signing and verification processes for AI models, libraries, and deployment artefacts to ensure only digitally signed components are approved for production use.
+
 ---
 
-## E005: Assess cloud vs on-prem processing
+## E005: Document data storage security
 
 ### Control shoulds
 - Conducting deployment risk assessments. For example, evaluating data sensitivity, regulatory compliance requirements, IP protection needs, and security controls for cloud vs. on-premises AI processing.
 - Documenting decision criteria and rationale. For example, establishing clear selection factors, maintaining records of deployment choices with business justification.
 - Reviewing deployment decisions when requirements change. For example, reassessing choices when data sensitivity, regulations, or threat landscape evolves.
+
 ---
 
 ## E006: Conduct vendor due diligence
@@ -371,12 +416,14 @@
 - Defining assessment criteria for foundational or upstream AI models. For example, data handling and ownership practices, PII controls, security measures, compliance status, open-source.
 - Conducting documented assessments. For example, scoring results, verification activities such as certifications reviewed and references contacted, and approval decisions. 
 - Maintaining assessment records with sufficient detail for audit purposes and retaining due diligence evidence before vendor approval.
+
 ---
 
 ## E007: [Retired] Document system change approvals
 
 ### Control shoulds
 - Documenting formal review and approval decisions for changes defined in E004: Assign accountability.
+
 ---
 
 ## E008: Review internal processes
@@ -384,10 +431,11 @@
 ### Control shoulds
 - Reviewing decision processes every quarter including AI system changes, foundational model selection, security assessment.
 - Maintaining a centralized repository of decision records and internal review of these record. For example, supporting evidence reviewed, remediation plans.
-- Documenting and tracking remediation of any risks identified.int
+- Documenting and tracking remediation of any risks identified.
 
 ### Control mays
 - Collecting and implementing external feedback on AI systems. For example, system risks, new threat patterns, new mitigation strategies.
+
 ---
 
 ## E009: Monitor third-party access
@@ -395,6 +443,7 @@
 ### Control shoulds
 - Configuring logging for third-party interactions. For example, capturing API connections, user access sessions, data exchanges, and service integrations.
 - Capturing access metadata. For example, user identification, authentication timestamps, accessed resources, session duration, origin IP addresses, and resource usage patterns.
+
 ---
 
 ## E010: Establish AI acceptable use policy
@@ -408,6 +457,7 @@
 - Real-time monitoring, blocking, or alerting capabilities.
 - Maintaining logging and tracking systems. For example, incident creation, violation tracking with case assignment and resolution documentation.
 - Conducting regular effectiveness reviews. For example, quarterly analysis of violation trends, tool performance assessment, policy updates based on emerging threats, and user training adjustments.
+
 ---
 
 ## E011: Record processing locations
@@ -418,6 +468,7 @@
 
 ### Control mays
 - Implementing transfer compliance procedures. For example, assessing data transfer requirements for AI training data and inference processing, maintaining approved transfer mechanisms for foundation model providers and AI infrastructure, mitigating transfer risk for cross-border AI model training.
+
 ---
 
 ## E012: Document regulatory compliance
@@ -426,6 +477,7 @@
 - Identifying relevant regulations. For example, data protection laws. For example, GDPR, CCPA, sector-specific requirements, emerging AI standards. For example, EU AI Act.
 - Documenting compliance procedures and strategies appropriate for company size and operations.
 - Reviewing the repository every 6 months and when additional requirements may be triggered. For example, regulations change or business operations expand into new jurisdictions.
+
 ---
 
 ## E013: Implement quality management system
@@ -438,22 +490,26 @@
 ### Control mays
 - Establishing data management and record-keeping systems. For example, documenting data governance procedures, maintaining technical documentation, implementing record retention policies for model training data and system outputs.
 - Documenting communication procedures with regulatory authorities and stakeholders. For example, establishing protocols for regulatory reporting, stakeholder notifications for incidents, and procedures for authority interactions.
+
 ---
 
 ## E014: Share transparency reports
 
 ### Control mays
 This requirement was merged into E017 at the Q1, 2026 standard update. See aiuc-1.com/changelog for more information
+
 ---
 
-## E015: Log model activity
+## E015: Log AI system activity
 
 ### Control shoulds
 - Capturing system activity details to support incident investigation and behavior explanation. For example, logging inputs, processing steps, outputs, and metadata for AI systems.
 - Implementing log storage with appropriate retention periods, access controls, and data sanitation to support auditing and incident response.
 
 ### Control mays
+- Capturing full execution chains of agentic workflows to support investigation of agent-specific incidents. For example, logging agent provenance metadata, tool call parameters and results, sub-agent delegations and their outcomes, approval/authorization events (e.g., human-in-the-loop approvals), and reasoning traces where available.
 - Implementing technical controls to ensure logs are tamper-evident and independently verifiable. For example, ensuring that captured records cannot be modified or deleted after creation, ensuring sequence integrity so that gaps, omissions, and reordering are detectable during incident investigation or audit.
+
 ---
 
 ## E016: Implement AI disclosure mechanisms
@@ -462,8 +518,9 @@ This requirement was merged into E017 at the Q1, 2026 standard update. See aiuc-
 - Implementing AI disclosure for text-based interactions. For example, displaying clear notices when users interact with AI chatbots, virtual assistants, or automated messaging systems.
 - Implementing AI disclosure for voice-based interactions. For example, providing audio notifications at the beginning of voice calls or interactions.
 - Labelling AI-generated media and documents in a machine-readable and detectable format. For example, marking AI-generated images, videos, audio, or documents with metadata, watermarks, or labels indicating artificial generation.
-- Disclosing when autonomous AI agents or automated workflows are performing actions. For example, notifying users when AI systems are making decisions, processing requests, or executing tasks without human oversight.
+- Disclosing when autonomous AI agents or systems are performing actions. For example, notifying users when AI systems are making decisions, processing requests, or executing tasks without human oversight.
 - Establishing reactive disclosure capabilities when users ask if they are interacting with AI.
+
 ---
 
 ## E017: Document system transparency policy
@@ -475,6 +532,7 @@ This requirement was merged into E017 at the Q1, 2026 standard update. See aiuc-
 ### Control mays
 - Defining policies for sharing transparency documentation with external stakeholders. For example, establishing when reports are shared, specifying recipient categories, determining what information is disclosed to each stakeholder type.
 - Documenting sharing procedures including approval workflows, version control, and distribution tracking. For example, establishing approval requirements before external sharing, maintaining version control of shared documents, tracking which stakeholders received which versions.
+
 ---
 
 ## F001: Prevent AI cyber misuse
@@ -484,6 +542,7 @@ This requirement was merged into E017 at the Q1, 2026 standard update. See aiuc-
 
 ### Control mays
 - Implementing malicious use detection and blocking. For example, deploying available content filtering to detect requests for malicious code generation, attack planning, and vulnerability exploitation guidance, configuring automated blocking of cyber attack assistance requests, maintaining databases of prohibited use patterns.
+
 ---
 
 ## F002: Prevent catastrophic misuse
@@ -493,5 +552,5 @@ This requirement was merged into E017 at the Q1, 2026 standard update. See aiuc-
 
 ### Control mays
 - Establishing catastrophic misuse monitoring. For example, monitoring AI system interactions for patterns indicating weapons development or mass harm intent, implementing real-time alerting for detected catastrophic misuse attempts, documenting suspicious queries and system responses.
----
 
+---
