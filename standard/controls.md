@@ -28,7 +28,6 @@
 - Configuring data access limits to reduce data and privacy exposure. For example, limiting data access to task-relevant information based on context, implementing scoping based on user roles or workflow requirements, and avoiding persistent or out-of-scope data access.
 
 ### Control mays
-- Deploying monitoring mechanisms. Including ensuring AI systems only perform necessary inference and logging deviations from defined operational scope.
 - Enabling agent identity management. For example, assigning each agent a unique, cryptographically verifiable identity; supporting standard identity federation protocols (e.g., OAuth 2.0, OIDC) for enterprise IAM integration; publishing agent cards declaring each agent's capabilities, tools, and permission scopes.
 - Enabling agent access and governance through permission-ready architecture. For example, exposing per-agent permission scopes mappable to enterprise roles; supporting just-in-time permissions scoped to specific subtasks; preventing silent inheritance of elevated permissions from orchestrators or parent agents; enforcing segregation of duties across systems; and integrating data loss prevention controls on agent actions and tool calls.
 
@@ -61,7 +60,6 @@
 
 ### Control shoulds
 - Implementing safeguards to prevent personal data leakage through AI system outputs and logs. For example, filtering prompts and outputs for personal identifiers before storage or display, implementing automated PII detection and redaction in system logs, preventing retention of outputs containing sensitive personal information, or blocking responses that would expose personal identifiers.
-- Requiring authentication and authorization for PII access. For example, role-based access controls for PII-containing systems, multi-factor authentication for sensitive data access, or approval-gated access to customer information.
 
 ### Control mays
 - Integrating with existing data loss prevention (DLP) systems to monitor and block outputs containing personal data in violation of policy.
@@ -77,6 +75,19 @@
 - Establishing supplementary content filtering mechanisms where provider protections have gaps or limitations. For example, detecting copyrighted material in outputs, implementing trademark screening.
 - Implementing user guidance and guardrails to reduce IP risk. For example, usage policies that explain prohibited content types, user warnings in product, restricting output generation in known infringement domains.
 - Implementing restrictions in AI acceptable use policy.
+
+---
+
+## A008: Prevent leakage of credentials and secrets
+
+### Control shoulds
+- Implementing safeguards to detect credentials in user inputs. For example, scanning user prompts and pasted content for API keys, access tokens, private keys, and connection strings using pattern-matching or entropy-based detection; defining handling procedures when detected such as warning the user, refusing to persist, or flagging to the deployer.
+- Implementing safeguards to keep secrets out of generated code artifacts. For example, guiding the model via system prompts to reference environment variables or secret-management tools rather than hardcoding credentials, post-generation scanning of output files for common credential patterns, or blocking/flagging generations that contain detected secrets before they are written to disk.
+- Implementing safeguards to securely store user-provided credentials to enable agent-connected services. For example, storing OAuth tokens, API keys, and connection strings in a dedicated secret manager, encrypting credentials at rest, scoping credential access per tool and per session, or fetching credentials only at the point of tool invocation rather than persisting them in the agent's context window.
+
+### Control mays
+- Implementing user-facing warnings when potential secrets are detected in user inputs. For example, alerting users when credentials are detected in their prompts.
+- Implementing safeguards to prevent secrets from being retained in platform logs, conversation history, and stored artifacts. For example, redacting detected credential patterns before log storage, masking secrets in conversation history displayed to users or support staff, or applying scrubbing functions to prompts and outputs before persistence.
 
 ---
 
@@ -130,7 +141,7 @@
 ## B005: Implement real-time input filtering
 
 ### Control shoulds
-- Integrating automated moderation tools to filter inputs before they reach the foundation model. For example, integrating third-party moderation APIs, implementing custom filtering rules, configuring blocking or warning actions for flagged content, and establishing confidence thresholds based on risk category and severity
+- Integrating automated moderation tools to filter inputs before they reach the foundation model. For example, integrating third-party moderation APIs, implementing custom filtering rules, configuring blocking or warning actions for flagged content, and establishing confidence thresholds based on risk category and severity.
 
 ### Control mays
 - Documenting the moderation logic and rationale. For example, explaining chosen moderation tools, threshold justifications, and decision criteria for different risk categories.
@@ -147,7 +158,7 @@
 - Deploying monitoring and alerting for agent actions that exceed security boundaries. For example, logging all agent service interactions, alerting on access attempts to unauthorized systems or APIs, or anomaly detection flagging unusual connection patterns.
 
 ### Control mays
-- Implementing additional safeguards to contain runtime risk. For example, applying sandboxed execution environments with restricted filesystem, network, and credential access for first-party MCP servers; monitoring MCP tool definitions for unauthorized changes after initial approval; providing pre-execution authorization hooks that verify runtime tool calls against defined policy before execution proceeds; or equivalent containment approaches appropriate to the deployment architecture..
+- Implementing additional safeguards to contain runtime risk. For example, enabling sandboxed execution environments with configurable filesystem, network, and credential restrictions for agent-executed code and first-party MCP servers, monitoring MCP tool definitions for unauthorized changes after initial approval, providing pre-execution authorization hooks that verify runtime tool calls against defined policy before execution proceeds, or scanning agent configuration artifacts such as hooks, skills and rules for prompt injection or unauthorized behavior.
 
 ---
 
@@ -163,7 +174,6 @@
 ## B008: Protect AI system deployment environment
 
 ### Control shoulds
-- Implementing AI system access protection. For example, restricting access to production AI systems based on job function and operational need, implementing MFA for model system access, maintaining user access reviews appropriate to organizational size.
 - Enforcing caller authentication across API endpoints and agentic interfaces. For example, applying scoped API tokens or signed requests for model API access; enforcing OAuth 2.0 or OIDC token validation with appropriate scoping for MCP server connections; implementing mutual authentication for agent-to-agent interfaces.
 - Securing data in transit across model API endpoints and agentic interfaces. For example, enforcing TLS for all model API endpoint traffic, MCP server connections, and agent-to-agent communication channels; implementing credential rotation policies for long-lived service connections.
 
@@ -182,6 +192,20 @@
 ### Control mays
 - Providing user-facing notices or documentation about output limitations.
 - Limiting the fidelity of model outputs in certain use cases. For example, applying output rounding, threshold bands, or obfuscation techniques to reduce the risk of model inversion.
+
+---
+
+## B010: Promote secure patterns in generated code
+
+### Control shoulds
+- Implementing safeguards to promote secure patterns for common web vulnerability classes in generated code. For example, defaulting to parameterized queries or safe ORM patterns for database access, applying output encoding and contextual escaping to prevent cross-site scripting, or enforcing HTTPS/TLS in generated network and API code.
+- Implementing safeguards to promote secure patterns for authentication and authorization in generated code. For example, defaulting to vetted authentication libraries or patterns on auth-related prompts, applying access control checks and least-privilege patterns by default, or avoiding generation of custom cryptographic or authentication primitives.
+- Implementing safeguards to prevent dependency risks in generated code. For example, avoiding wildcard version specifications (e.g., * or latest) in generated manifests, verifying that suggested packages exist in their respective registries before including them in generated code, or applying guidance that avoids known-abandoned or typosquatted packages.
+
+### Control mays
+- Implementing safeguards to promote secure defaults for session management in generated code. For example, applying HttpOnly, Secure, and SameSite flags to session cookies by default, or defaulting to CSRF protections on state-changing endpoints.
+- Implementing safeguards to promote defensive programming patterns in generated code. For example, defaulting to input validation on user-supplied data, applying safe error handling that avoids exposing stack traces or internal details, or defaulting to rate limiting on generated public-facing endpoints.
+- Implementing safeguards to prevent generated logging code from capturing secrets or personal information. For example, defaulting logging patterns to exclude sensitive fields, or applying guidance that avoids logging full request bodies or auth headers.
 
 ---
 
@@ -231,7 +255,7 @@
 
 ---
 
-## C005: Prevent customer-defined high risk outputs
+## C005: Prevent agent-specific high risk outputs
 
 ### Control shoulds
 - Implementing detection and blocking mechanisms aligned with organizational risk taxonomy. For example, deploying filtering based on defined risk categories and severity thresholds.
@@ -247,7 +271,7 @@
 
 ### Control shoulds
 - Establishing output sanitization and validation procedures before presenting content to users. For example, encoding or stripping potentially malicious content, validating structured outputs against safe schemas, blocking unsafe URLs, and enforcing secure rendering modes.
-- Implementing security labeling and content handling based on trust level. For example, marking untrusted or third-party content, distinguishing external data from system-generated content, and applying differentiated security controls based on content source.
+- Implementing content handling and security labelling based on trust level. For example, marking untrusted or third-party content, distinguishing external data from system-generated content, and applying differentiated security controls based on content source.
 
 ### Control mays
 - Detecting advanced output-based attack patterns. For example, identifying prompt injection attempts, model subversion techniques, payloads targeting downstream systems, or obfuscated exploits designed to bypass filters.
@@ -381,8 +405,8 @@
 ## E003: AI failure plan for hallucinations
 
 ### Control shoulds
-- Establishing compensation assessment procedures. For example, loss evaluation methods, settlement approaches, and payment authorization levels with appropriate approval requirements.
-- Implementing remediation measures. For example, system freeze capabilities, model adjustments, output validation improvements, customer notification, and enhanced monitoring.
+- Implementing customer communication protocols. For example, disclosure procedures, explanation of corrective actions, and follow-up commitments with executive approval for significant incidents.
+- Establishing immediate mitigation steps with designated staff responsibilities. For example, system freeze capabilities, model adjustments, output validation improvements, customer notification, and enhanced monitoring.
 
 ### Control mays
 - Defining hallucination incident types. 
@@ -404,9 +428,7 @@
 ## E005: Document data storage security
 
 ### Control shoulds
-- Conducting deployment risk assessments. For example, evaluating data sensitivity, regulatory compliance requirements, IP protection needs, and security controls for cloud vs. on-premises AI processing.
-- Documenting decision criteria and rationale. For example, establishing clear selection factors, maintaining records of deployment choices with business justification.
-- Reviewing deployment decisions when requirements change. For example, reassessing choices when data sensitivity, regulations, or threat landscape evolves.
+- Documenting data storage security. For example, assessments around cloud vs. on-premises processing.
 
 ---
 
@@ -443,6 +465,9 @@
 ### Control shoulds
 - Configuring logging for third-party interactions. For example, capturing API connections, user access sessions, data exchanges, and service integrations.
 - Capturing access metadata. For example, user identification, authentication timestamps, accessed resources, session duration, origin IP addresses, and resource usage patterns.
+
+### Control mays
+- Generating alerts on anomalous third-party access patterns against defined detection rules. For example, alerting on unexpected call volume or out-of-scope endpoints for service connections, repeated failed logins for human access, or credential use outside approved scope - with each alert routed to a responsible owner for disposition.
 
 ---
 
@@ -493,10 +518,10 @@
 
 ---
 
-## E014: Share transparency reports
+## E014: [Retired] Share transparency reports
 
 ### Control mays
-This requirement was merged into E017 at the Q1, 2026 standard update. See aiuc-1.com/changelog for more information
+- This requirement was merged into E017 at the Q1, 2026 standard update. See aiuc-1.com/changelog for more information.
 
 ---
 
@@ -526,12 +551,12 @@ This requirement was merged into E017 at the Q1, 2026 standard update. See aiuc-
 ## E017: Document system transparency policy
 
 ### Control shoulds
-- Establishing a transparency policy defining documentation requirements for major AI systems. For example, specifying required documentation elements, establishing documentation standards.
 - Creating transparency documentation for major AI systems. For example, documenting system characteristics, data provenance, and model behavior for systems meeting documentation criteria.
 
 ### Control mays
 - Defining policies for sharing transparency documentation with external stakeholders. For example, establishing when reports are shared, specifying recipient categories, determining what information is disclosed to each stakeholder type.
 - Documenting sharing procedures including approval workflows, version control, and distribution tracking. For example, establishing approval requirements before external sharing, maintaining version control of shared documents, tracking which stakeholders received which versions.
+- Documenting platform-level and deployer-level security responsibilities for AI systems. For example, delineating which security obligations are managed by the platform versus the deploying organization.
 
 ---
 
