@@ -48,9 +48,15 @@ Implement safeguards to detect and prevent leakage of secrets in AI system input
 
 ---
 
-## B001: Third-party testing of adversarial robustness
+## A009: Third-party testing for data & privacy risk
 
-Implement adversarial testing program to validate system resilience against adversarial inputs and prompt injection attempts in line with adversarial threat taxonomy.
+Appoint expert third-parties to evaluate system robustness to data & privacy risk as defined in the AIUC-1 risk taxonomy at least every 3 months
+
+---
+
+## B001: Third-party testing for security risk
+
+Appoint expert third-parties to evaluate system robustness to security risk as defined in the AIUC-1 risk taxonomy at least every 3 months
 
 ---
 
@@ -162,21 +168,21 @@ Implement mechanisms to enable real-time user feedback collection, intervention 
 
 ---
 
-## C010: Third-party testing for harmful outputs
+## C010: Third-party testing for safety risk
 
-Appoint expert third parties to evaluate system robustness to harmful outputs including distressed outputs, angry responses, high-risk advice, offensive content, bias, and deception at least every 3 months.
-
----
-
-## C011: Third-party testing for out-of-scope outputs
-
-Appoint expert third parties to evaluate system robustness to out-of-scope outputs at least every 3 months (e.g. political discussion, healthcare advice).
+Appoint expert third-parties to evaluate system robustness to safety risk as defined in the AIUC-1 risk taxonomy at least every 3 months
 
 ---
 
-## C012: Third-party testing for customer-defined risk
+## C011: [Retired] Third-party testing for out-of-scope outputs
 
-Appoint expert third-parties to evaluate system robustness to additional high-risk outputs as defined in risk taxonomy at least every 3 months.
+Retired - see changelog (Q4 2026 update).
+
+---
+
+## C012: [Retired] Third-party testing for customer-defined risk
+
+Retired - see changelog (Q4 2026 update).
 
 ---
 
@@ -186,9 +192,9 @@ Implement safeguards or technical controls to prevent hallucinated outputs.
 
 ---
 
-## D002: Third-party testing for hallucinations
+## D002: [Retired] Third-party testing for hallucinations
 
-Appoint expert third-parties to evaluate hallucinated outputs at least every 3 months.
+Retired - see changelog (Q4 2026 update).
 
 ---
 
@@ -198,9 +204,9 @@ Implement safeguards or technical controls to prevent tool calls in AI systems f
 
 ---
 
-## D004: Third-party testing of tool calls
+## D004: Third-party testing for reliability risk
 
-Appoint expert third-parties to evaluate tool calls in AI systems, including executing unauthorized actions, accessing restricted information, or making decisions beyond their intended scope at least every 3 months.
+Appoint expert third-parties to evaluate system robustness to reliability risk as defined in the AIUC-1 risk taxonomy at least every 3 months
 
 ---
 
@@ -234,9 +240,9 @@ Document data storage security practices considering data sensitivity, regulator
 
 ---
 
-## E006: Conduct vendor due diligence
+## E006: Conduct vendor and model due diligence
 
-Establish AI vendor due diligence processes for foundation and upstream model providers covering data handling, PII controls, security and compliance.
+Establish due diligence processes for foundation and upstream model providers covering data handling, PII controls, security and compliance.
 
 ---
 
@@ -303,6 +309,12 @@ Implement clear disclosure mechanisms to inform users when they are interacting 
 ## E017: Document system transparency policy
 
 Establish a system transparency policy and maintain a repository of model cards, datasheets, and interpretability reports for major systems.
+
+---
+
+## E018: Third-party testing for accountability risk
+
+Appoint expert third-parties to evaluate system robustness to accountability risk as defined in the AIUC-1 risk taxonomy at least every 3 months
 
 ---
 

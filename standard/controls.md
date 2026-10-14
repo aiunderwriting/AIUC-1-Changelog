@@ -91,13 +91,21 @@
 
 ---
 
-## B001: Third-party testing of adversarial robustness
+## A009: Third-party testing for data & privacy risk
 
 ### Control shoulds
-- Establishing a taxonomy for adversarial risks. For example, drawing on NIST's AI 100-2e2023 attack classifications and aligning these to system architecture and use cases.
-- Conducting comprehensive adversarial testing at least quarterly. For example, performing structured red-teaming, prompt injection assessments, jailbreaking attempts, adversarial perturbation testing, semantic manipulation, and simulated malicious tool invocations.
-- Maintaining secure testing documentation. For example, recording test cases, methods, outcomes, and system behaviors with restricted access controls, implementing secure storage for sensitive testing materials.
-- Establishing improvement processes based on findings. For example, assigning owners and remediation timelines based on test severity, tracking fixes through risk registers or issue management systems, documenting updates to safeguards and procedures.
+- Appointing qualified third-party assessors. Including selecting assessors with relevant technical capabilities for identified risk areas, maintaining records of assessor qualifications and independence.
+- Conducting regular testing. Including defining testing scope and methodologies based on risk taxonomy and performing assessments of high-risk areas at least every quarter.
+- Maintaining documentation. Including testing scope and results.
+
+---
+
+## B001: Third-party testing for security risk
+
+### Control shoulds
+- Appointing qualified third-party assessors. Including selecting assessors with relevant technical capabilities for identified risk areas, maintaining records of assessor qualifications and independence.
+- Conducting regular testing. Including defining testing scope and methodologies based on risk taxonomy and performing assessments of high-risk areas at least every quarter.
+- Maintaining documentation. Including testing scope and results.
 
 ### Control mays
 - Aligning adversarial testing with broader security testing programs. For example, integrating AI-specific test cases into broader penetration testing, sharing threat models across red/blue teams, aligning test cycles with security audit and compliance calendars.
@@ -141,7 +149,7 @@
 ## B005: Implement real-time input filtering
 
 ### Control shoulds
-- Integrating automated moderation tools to filter inputs before they reach the foundation model. For example, integrating third-party moderation APIs, implementing custom filtering rules, configuring blocking or warning actions for flagged content, and establishing confidence thresholds based on risk category and severity.
+- Integrating automated moderation tools to filter inputs before they reach the foundation model. For example, integrating third-party moderation APIs, implementing custom filtering rules, configuring blocking or warning actions for flagged content, and establishing confidence thresholds based on risk category and severity
 
 ### Control mays
 - Documenting the moderation logic and rationale. For example, explaining chosen moderation tools, threshold justifications, and decision criteria for different risk categories.
@@ -229,6 +237,7 @@
 ### Control mays
 - Integrating AI system testing into established software development lifecycle (SDLC) gates. For example, including threat modelling and risk evaluation during design phases, requiring risk evaluation and sign-off at staging or pre-production milestones, aligning with CI/CD or MLOps pipelines, and documenting test artefacts in shared repositories."
 - Implementing pre-deployment vulnerability scanning of AI artifacts and dependencies. For example, scanning AI models and ML libraries for security vulnerabilities, validating runtime behavior for unsafe operations, and analyzing outputs for harmful content before deployment.
+- Testing changes to open-weight model before deployment. For example, re-running safety evaluations and guardrail test suites after major weights update via fine-tuning or quantization, or inference engine changes and comparing results to the prior model's baseline, and running targeted or automated checks for routine or low-risk changes.
 
 ---
 
@@ -311,30 +320,26 @@
 
 ---
 
-## C010: Third-party testing for harmful outputs
-
-### Control shoulds
-- Appointing qualified third-party assessors. Including selecting assessors with relevant technical capabilities for identified risk areas, maintaining records of assessor qualifications and independence.
-- Conducting regular testing. Including performing assessments of harmful outputs at least every quarter, defining testing scope and methodologies based on risk classifications and industry benchmarks like ToxiGen, coordinating with internal security and testing teams.
-- Maintaining documentation. Including testing scope, results, and remediation actions taken, tracking follow-up activities and resolution timelines.
-
----
-
-## C011: Third-party testing for out-of-scope outputs
-
-### Control shoulds
-- Appointing qualified third-party assessors. Including selecting assessors with relevant technical capabilities for identified risk areas, maintaining records of assessor qualifications and independence.
-- Conducting regular testing. Including defining testing scope and methodologies based on risk taxonomy and performing assessments of out-of-scope outputs at least every quarter. 
-- Maintaining documentation. Including testing scope, results, and remediation actions taken, tracking follow-up activities and resolution timelines.
-
----
-
-## C012: Third-party testing for customer-defined risk
+## C010: Third-party testing for safety risk
 
 ### Control shoulds
 - Appointing qualified third-party assessors. Including selecting assessors with relevant technical capabilities for identified risk areas, maintaining records of assessor qualifications and independence.
 - Conducting regular testing. Including defining testing scope and methodologies based on risk taxonomy and performing assessments of high-risk areas at least every quarter.
-- Maintaining documentation. Including testing scope, results, and remediation actions taken, tracking follow-up activities and resolution timelines.
+- Maintaining documentation. Including testing scope and results.
+
+---
+
+## C011: [Retired] Third-party testing for out-of-scope outputs
+
+### Control shoulds
+- This requirement was retired during the Q4, 2026 standard update. See aiuc-1.com/changelog for more information
+
+---
+
+## C012: [Retired] Third-party testing for customer-defined risk
+
+### Control shoulds
+- This requirement was retired during the Q4, 2026 standard update. See aiuc-1.com/changelog for more information
 
 ---
 
@@ -349,12 +354,10 @@
 
 ---
 
-## D002: Third-party testing for hallucinations
+## D002: [Retired] Third-party testing for hallucinations
 
 ### Control shoulds
-- Appointing qualified third-party assessors. Including selecting assessors with relevant technical capabilities for identified risk areas, maintaining records of assessor qualifications and independence.
-- Conducting regular testing. Including defining testing scope and methodologies based on risk taxonomy and performing assessments at least every quarter.
-- Maintaining documentation. Including testing scope, results, and remediation actions taken, tracking follow-up activities and resolution timelines.
+- This requirement was retired during the Q4, 2026 standard update. See aiuc-1.com/changelog for more information
 
 ---
 
@@ -364,19 +367,19 @@
 - Implementing tool call validation and authorization. For example, restricting tool calls to approved functions and MCP servers, validating parameters before execution.
 - Enforcing rate limits and transaction caps for autonomous tool use.
 - Establishing execution monitoring and logging. For example, tracking all tool calls, monitoring for unauthorized access attempts or scope violations.
+- Requiring human approval for sensitive tool operations. For example, requiring human confirmation before executing high-risk actions, multi-step tool calls, implementing approval workflows for operations beyond autonomous boundaries.
 
 ### Control mays
-- Requiring human approval for sensitive tool operations. For example, requiring human confirmation before executing high-risk actions, multi-step tool calls, implementing approval workflows for operations beyond autonomous boundaries.
 - Reviewing patterns of AI tool usage. For example, identifying anomalies, updating tool permissions, and retiring unused or high-risk functions during scheduled evaluations.
 
 ---
 
-## D004: Third-party testing of tool calls
+## D004: Third-party testing for reliability risk
 
 ### Control shoulds
 - Appointing qualified third-party assessors. Including selecting assessors with relevant technical capabilities for identified risk areas, maintaining records of assessor qualifications and independence.
-- Conducting regular testing. Including defining testing scope and methodologies based on risk taxonomy and performing assessments of tool calls at least every quarter.
-- Maintaining documentation. Including testing scope, results, and remediation actions taken, tracking follow-up activities and resolution timelines.
+- Conducting regular testing. Including defining testing scope and methodologies based on risk taxonomy and performing assessments of high-risk areas at least every quarter.
+- Maintaining documentation. Including testing scope and results.
 
 ---
 
@@ -409,7 +412,7 @@
 - Establishing immediate mitigation steps with designated staff responsibilities. For example, system freeze capabilities, model adjustments, output validation improvements, customer notification, and enhanced monitoring.
 
 ### Control mays
-- Defining hallucination incident types. 
+- Defining hallucination incident types.
 - Coordinating potential external support. For example, legal consultation for significant claims, financial review when needed, and insurance coverage activation.
 
 ---
@@ -432,19 +435,22 @@
 
 ---
 
-## E006: Conduct vendor due diligence
+## E006: Conduct vendor and model due diligence
 
 ### Control shoulds
 - Defining assessment criteria for foundational or upstream AI models. For example, data handling and ownership practices, PII controls, security measures, compliance status, open-source.
-- Conducting documented assessments. For example, scoring results, verification activities such as certifications reviewed and references contacted, and approval decisions. 
+- Conducting documented assessments. For example, scoring results, verification activities such as certifications reviewed and references contacted, and approval decisions.
 - Maintaining assessment records with sufficient detail for audit purposes and retaining due diligence evidence before vendor approval.
+
+### Control mays
+- Verifying the source, integrity and licence of the open-weight model before use. For example, obtaining weights from the publisher's own repository or a vetted registry, verifying published checksums or signatures, checking for known issues with the model version, confirming the licence permits the intended use and identifying the base model for fine-tuned derivatives.
 
 ---
 
 ## E007: [Retired] Document system change approvals
 
 ### Control shoulds
-- Documenting formal review and approval decisions for changes defined in E004: Assign accountability.
+- This requirement was merged into E004 at the Q1, 2026 standard update. See aiuc-1.com/changelog for more information
 
 ---
 
@@ -521,7 +527,7 @@
 ## E014: [Retired] Share transparency reports
 
 ### Control mays
-- This requirement was merged into E017 at the Q1, 2026 standard update. See aiuc-1.com/changelog for more information.
+- This requirement was merged into E017 at the Q1, 2026 standard update. See aiuc-1.com/changelog for more information
 
 ---
 
@@ -560,6 +566,15 @@
 
 ---
 
+## E018: Third-party testing for accountability risk
+
+### Control shoulds
+- Appointing qualified third-party assessors. Including selecting assessors with relevant technical capabilities for identified risk areas, maintaining records of assessor qualifications and independence.
+- Conducting regular testing. Including defining testing scope and methodologies based on risk taxonomy and performing assessments of high-risk areas at least every quarter.
+- Maintaining documentation. Including testing scope and results.
+
+---
+
 ## F001: Prevent AI cyber misuse
 
 ### Control shoulds
@@ -567,6 +582,7 @@
 
 ### Control mays
 - Implementing malicious use detection and blocking. For example, deploying available content filtering to detect requests for malicious code generation, attack planning, and vulnerability exploitation guidance, configuring automated blocking of cyber attack assistance requests, maintaining databases of prohibited use patterns.
+- Assessing and mitigating cyber capabilities for open-weight models. For example, re-running cyber misuse evals on the modified model or adding output classifiers for exploit and malware generation.
 
 ---
 
